@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASMR World</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: #f9f9f9;
+            color: #111;
+            min-height: 100vh;
+        }
+        header {
+            background: #fff;
+            border-bottom: 0.5px solid #e0e0e0;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #111;
+        }
+        header h1 {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: #111;
+        }
+        .tagline {
+            margin-left: auto;
+            font-size: 12px;
+            color: #999;
+            letter-spacing: 1px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1px;
+            background: #e0e0e0;
+            border-top: 1px solid #e0e0e0;
+        }
+        .card {
+            background: #fff;
+            padding: 36px 32px;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .card:hover { background: #f5f5f5; }
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .card h2 {
+            font-size: 15px;
+            font-weight: 500;
+            color: #111;
+            margin-top: 8px;
+        }
+        .card p {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.6;
+        }
+        .card-arrow {
+            margin-top: auto;
+            font-size: 18px;
+            color: #ccc;
+            transition: color 0.15s;
+        }
+        .card:hover .card-arrow { color: #111; }
+        footer {
+            padding: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #bbb;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-dot"></div>
+        <h1>ASMR WORLD</h1>
+        <span class="tagline">Your guide to the best ASMR on YouTube</span>
+    </header>
+
+    <div class="grid">
+
+        <a href="artists.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <h2>Top Artists</h2>
+            <p>Most subscribed ASMR creators ranked by popularity</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="videos.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <h2>Top Videos</h2>
+            <p>Most watched ASMR videos of all time</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="trending.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h2>Most Viewed Fortnightly</h2>
+            <p>The hottest ASMR videos from the last two weeks</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="growing.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h2>Fastest Growing</h2>
+            <p>ASMR channels exploding in popularity right now</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="softspoken.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h2>Soft Spoken</h2>
+            <p>Gentle soft spoken ASMR creators and videos</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="whispering.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <h2>Whispering</h2>
+            <p>Soft spoken and whispering ASMR creators</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="roleplay.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h2>Roleplay</h2>
+            <p>Best roleplay ASMR videos and creators</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="scratching.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h2>Scratching</h2>
+            <p>The best scratching sounds to trigger your tingles</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="tapping.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <h2>Tapping</h2>
+            <p>Top tapping ASMR videos and creators</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="reiki.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2z"/><path d="M12 12c-5 0-9 2.5-9 5v1h18v-1c0-2.5-4-5-9-5z"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+            </div>
+            <h2>Reiki ASMR</h2>
+            <p>Healing energy, chakra balancing and spiritual ASMR</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="nature.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h2>Nature Sounds</h2>
+            <p>Rain, wind and relaxing nature ASMR</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+        <a href="shorts.html" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/><polyline points="9 9 12 6 15 9"/><line x1="12" y1="6" x2="12" y2="14"/></svg>
+            </div>
+            <h2>ASMR Shorts</h2>
+            <p>The best ASMR Shorts on YouTube right now</p>
+            <div class="card-arrow">→</div>
+        </div>
+        </a>
+
+    </div>
+
+    <footer>CREATORINDEX · EST. 2026</footer>
+</body>
+</html>

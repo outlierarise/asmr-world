@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Artists — ASMR World</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #111; min-height: 100vh; }
+        header { background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 20px 40px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+        .back { font-size: 13px; color: #999; text-decoration: none; margin-right: 8px; }
+        .back:hover { color: #111; }
+        .header-dot { width: 8px; height: 8px; border-radius: 50%; background: #111; }
+        header h1 { font-size: 14px; font-weight: 500; letter-spacing: 3px; color: #111; }
+        .page-title { padding: 48px 40px 24px; background: #fff; }
+        .page-title h2 { font-size: 32px; font-weight: 500; color: #111; }
+        .page-title p { font-size: 14px; color: #999; margin-top: 8px; }
+        .badge { display: inline-block; font-size: 11px; color: #111; border: 0.5px solid #e0e0e0; padding: 4px 12px; border-radius: 20px; margin-top: 12px; }
+        .last-updated { font-size: 11px; color: #bbb; margin-top: 8px; }
+        .tabs { background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 0 40px; display: flex; gap: 0; overflow-x: auto; }
+        .tab-btn { font-size: 13px; font-weight: 500; color: #999; padding: 16px 24px; cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; letter-spacing: 0.5px; white-space: nowrap; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; }
+        .tab-btn:hover { color: #111; }
+        .tab-btn.active { color: #111; border-bottom: 2px solid #111; }
+        .tab-desc { font-size: 11px; color: #bbb; display: block; font-weight: 400; margin-top: 2px; letter-spacing: 0; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .tier-intro { max-width: 800px; margin: 0 auto; padding: 28px 40px 0; font-size: 13px; color: #999; line-height: 1.7; }
+        .channels-list { max-width: 800px; margin: 0 auto; padding: 32px 40px; }
+
+        /* ── ARTIST CARD ── */
+        .artist-card { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 20px; transition: border-color 0.15s; text-decoration: none; color: inherit; }
+        .artist-card:hover { border-color: #111; }
+        .rank { font-size: 24px; font-weight: 500; color: #e0e0e0; min-width: 40px; }
+        .artist-avatar { width: 52px; height: 52px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .artist-avatar svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .artist-info { flex: 1; min-width: 0; }
+        .artist-name { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 4px; }
+        .artist-meta { font-size: 13px; color: #999; margin-bottom: 8px; }
+        .tag-row { display: flex; align-items: center; gap: 8px; }
+        .artist-tag { font-size: 11px; color: #111; border: 0.5px solid #e0e0e0; padding: 3px 8px; border-radius: 20px; display: inline-block; }
+        .sub-count { font-size: 13px; font-weight: 500; color: #111; white-space: nowrap; text-align: right; flex-shrink: 0; }
+        .sub-count span { display: block; font-size: 11px; font-weight: 400; color: #999; margin-top: 2px; }
+        .visit-btn { font-size: 13px; color: #999; transition: color 0.15s; white-space: nowrap; margin-left: 16px; flex-shrink: 0; text-decoration: none; }
+        .artist-card:hover .visit-btn { color: #111; }
+
+        .state-box { max-width: 800px; margin: 0 auto; padding: 60px 40px; text-align: center; }
+        .state-box .msg { font-size: 13px; color: #999; margin-bottom: 6px; }
+        .state-box .sub { font-size: 11px; color: #bbb; }
+        .empty-list { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 48px; text-align: center; font-size: 13px; color: #bbb; }
+        footer { padding: 40px; text-align: center; font-size: 12px; color: #bbb; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back">← Back</a>
+        <div class="header-dot"></div>
+        <h1>ASMR WORLD</h1>
+    </header>
+    <div class="page-title">
+        <h2>Top Artists</h2>
+        <p>The most subscribed ASMR creators on YouTube — ranked by audience size</p>
+        <div class="badge">Top 20 per tier · updated live from YouTube</div>
+        <div class="last-updated" id="lastUpdated">Loading live data...</div>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('favourites', this)">Fan Favourites<span class="tab-desc">550K+ subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('established', this)">Established<span class="tab-desc">200K–550K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('midtier', this)">Mid Tier<span class="tab-desc">50K–200K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('gems', this)">Hidden Gems<span class="tab-desc">10K–50K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('rising', this)">Rising Stars<span class="tab-desc">Under 10K subscribers</span></button>
+    </div>
+    <div id="panel-favourites" class="tab-panel active">
+        <p class="tier-intro">The biggest names in ASMR — creators who have built audiences of 550K or more. These are the household names of the ASMR world.</p>
+        <div class="channels-list" id="list-favourites"><div class="state-box"><div class="msg">Fetching top ASMR artists...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-established" class="tab-panel">
+        <p class="tier-intro">Creators with 200K–550K subscribers — serious, established voices with loyal audiences. These artists are a mainstay of the ASMR community.</p>
+        <div class="channels-list" id="list-established"><div class="state-box"><div class="msg">Fetching top ASMR artists...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-midtier" class="tab-panel">
+        <p class="tier-intro">Creators with 50K–200K subscribers — growing fast with quality content. These artists are on their way up.</p>
+        <div class="channels-list" id="list-midtier"><div class="state-box"><div class="msg">Fetching top ASMR artists...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-gems" class="tab-panel">
+        <p class="tier-intro">Under 50K subscribers — talented creators who haven't broken through yet. These are the hidden gems of the ASMR world.</p>
+        <div class="channels-list" id="list-gems"><div class="state-box"><div class="msg">Fetching top ASMR artists...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-rising" class="tab-panel">
+        <p class="tier-intro">Under 10K subscribers — the newest voices in ASMR. These creators are just getting started. Watch this space.</p>
+        <div class="channels-list" id="list-rising"><div class="state-box"><div class="msg">Fetching top ASMR artists...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <footer>CREATORINDEX · EST. 2026</footer>
+    <script src="search.js"></script>
+    <script>
+        function switchTab(tier, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + tier).classList.add('active');
+        }
+        function tierTag(tier) {
+            if (tier === 'Fan Favourites') return '⭐ Fan Favourite';
+            if (tier === 'Established')    return '📈 Established';
+            if (tier === 'Mid Tier')       return '🎯 Mid Tier';
+            if (tier === 'Hidden Gems')    return '💎 Hidden Gem';
+            if (tier === 'Rising Stars')   return '🚀 Rising Star';
+            return tier;
+        }
+        function renderArtistCard(channel, rank) {
+            return `
+                <a class="artist-card" href="${channel.channelUrl}" target="_blank">
+                    <div class="rank">${String(rank).padStart(2, '0')}</div>
+                    <div class="artist-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="artist-info">
+                        <div class="artist-name">${channel.channelName}</div>
+                        <div class="artist-meta">${channel.subsDisplay} subscribers</div>
+                        <div class="tag-row">
+                            <span class="artist-tag">${tierTag(channel.tier.name)}</span>
+                        </div>
+                    </div>
+                    <div class="sub-count">${channel.subsDisplay}<span>subscribers</span></div>
+                    <span class="visit-btn">Visit →</span>
+                </a>`;
+        }
+        function renderList(listId, channels) {
+            const el = document.getElementById(listId);
+            if (!el) return;
+            if (!channels || channels.length === 0) {
+                el.innerHTML = `<div class="empty-list">No artists found in this tier right now — check back soon.</div>`;
+                return;
+            }
+            el.innerHTML = channels.slice(0, 20).map((c, i) => renderArtistCard(c, i + 1)).join('');
+        }
+        async function loadPage() {
+            try {
+                const grouped = await window.CreatorIndex.getTopArtists();
+                renderList('list-favourites', grouped['Fan Favourites']);
+                renderList('list-established', grouped['Established']);
+                renderList('list-midtier',     grouped['Mid Tier']);
+                renderList('list-gems',        grouped['Hidden Gems']);
+                renderList('list-rising',      grouped['Rising Stars']);
+                const now = new Date();
+                document.getElementById('lastUpdated').textContent =
+                    `Live data · updated ${now.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })} at ${now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}`;
+            } catch (err) {
+                console.error('Page load failed:', err);
+                ['list-favourites','list-established','list-midtier','list-gems','list-rising'].forEach(id => {
+                    document.getElementById(id).innerHTML = `<div class="empty-list">Something went wrong. Please refresh the page.</div>`;
+                });
+            }
+        }
+        loadPage();
+    </script>
+</body>
+</html>

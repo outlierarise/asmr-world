@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Sounds — ASMR World</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #111; min-height: 100vh; }
+        header { background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 20px 40px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+        .back { font-size: 13px; color: #999; text-decoration: none; margin-right: 8px; }
+        .back:hover { color: #111; }
+        .header-dot { width: 8px; height: 8px; border-radius: 50%; background: #111; }
+        header h1 { font-size: 14px; font-weight: 500; letter-spacing: 3px; color: #111; }
+        .page-title { padding: 48px 40px 24px; background: #fff; }
+        .page-title h2 { font-size: 32px; font-weight: 500; color: #111; }
+        .page-title p { font-size: 14px; color: #999; margin-top: 8px; }
+        .badge { display: inline-block; font-size: 11px; color: #111; border: 0.5px solid #e0e0e0; padding: 4px 12px; border-radius: 20px; margin-top: 12px; }
+        .last-updated { font-size: 11px; color: #bbb; margin-top: 8px; }
+        .tabs { background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 0 40px; display: flex; gap: 0; overflow-x: auto; }
+        .tab-btn { font-size: 13px; font-weight: 500; color: #999; padding: 16px 24px; cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; letter-spacing: 0.5px; white-space: nowrap; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; }
+        .tab-btn:hover { color: #111; }
+        .tab-btn.active { color: #111; border-bottom: 2px solid #111; }
+        .tab-desc { font-size: 11px; color: #bbb; display: block; font-weight: 400; margin-top: 2px; letter-spacing: 0; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .tier-intro { max-width: 800px; margin: 0 auto; padding: 28px 40px 0; font-size: 13px; color: #999; line-height: 1.7; }
+        .channels-list { max-width: 800px; margin: 0 auto; padding: 32px 40px; }
+        .video-card { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 20px; transition: border-color 0.15s; text-decoration: none; color: inherit; }
+        .video-card:hover { border-color: #111; }
+        .rank { font-size: 24px; font-weight: 500; color: #e0e0e0; min-width: 40px; }
+        .video-thumbnail { width: 120px; height: 68px; object-fit: cover; border-radius: 6px; background: #f0f0f0; flex-shrink: 0; }
+        .video-info { flex: 1; min-width: 0; }
+        .video-title { font-size: 14px; font-weight: 500; color: #111; line-height: 1.4; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .video-channel { font-size: 13px; color: #999; margin-bottom: 8px; }
+        .tag-row { display: flex; align-items: center; gap: 8px; }
+        .video-tag { font-size: 11px; color: #111; border: 0.5px solid #e0e0e0; padding: 3px 8px; border-radius: 20px; display: inline-block; }
+        .momentum { font-size: 11px; color: #111; border: 0.5px solid #111; padding: 3px 8px; border-radius: 20px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0.2px; }
+        .momentum .arrow { font-size: 10px; }
+        .video-views { font-size: 13px; font-weight: 500; color: #111; white-space: nowrap; text-align: right; flex-shrink: 0; }
+        .video-views span { display: block; font-size: 11px; font-weight: 400; color: #999; margin-top: 2px; }
+        .visit-btn { font-size: 13px; color: #999; text-decoration: none; transition: color 0.15s; white-space: nowrap; margin-left: 16px; flex-shrink: 0; }
+        .video-card:hover .visit-btn { color: #111; }
+        .state-box { max-width: 800px; margin: 0 auto; padding: 60px 40px; text-align: center; }
+        .state-box .msg { font-size: 13px; color: #999; margin-bottom: 6px; }
+        .state-box .sub { font-size: 11px; color: #bbb; }
+        .empty-list { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 48px; text-align: center; font-size: 13px; color: #bbb; }
+        footer { padding: 40px; text-align: center; font-size: 12px; color: #bbb; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back">← Back</a>
+        <div class="header-dot"></div>
+        <h1>ASMR WORLD</h1>
+    </header>
+    <div class="page-title">
+        <h2>Nature Sounds</h2>
+        <p>Rain, wind, forests and oceans — the most natural way to relax and sleep</p>
+        <div class="badge">Top 20 videos · updated live from YouTube</div>
+        <div class="last-updated" id="lastUpdated">Loading live data...</div>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('favourites', this)">Fan Favourites<span class="tab-desc">550K+ subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('established', this)">Established<span class="tab-desc">200K–550K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('midtier', this)">Mid Tier<span class="tab-desc">50K–200K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('gems', this)">Hidden Gems<span class="tab-desc">10K–50K subscribers</span></button>
+        <button class="tab-btn" onclick="switchTab('rising', this)">Rising Stars<span class="tab-desc">Under 10K subscribers</span></button>
+    </div>
+    <div id="panel-favourites" class="tab-panel active">
+        <p class="tier-intro">The biggest names in nature sounds ASMR — creators with 550K+ subscribers whose recent videos are trending right now. Ranked by views in the last 7 days.</p>
+        <div class="channels-list" id="list-favourites"><div class="state-box"><div class="msg">Fetching trending nature sounds videos...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-established" class="tab-panel">
+        <p class="tier-intro">Creators with 200K–550K subscribers — serious talent with a loyal following. These are the established voices of nature sounds ASMR.</p>
+        <div class="channels-list" id="list-established"><div class="state-box"><div class="msg">Fetching trending nature sounds videos...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-midtier" class="tab-panel">
+        <p class="tier-intro">Creators with 50K–200K subscribers — growing fast and producing quality nature sounds content. Keep an eye on this tier.</p>
+        <div class="channels-list" id="list-midtier"><div class="state-box"><div class="msg">Fetching trending nature sounds videos...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-gems" class="tab-panel">
+        <p class="tier-intro">Under 50K subscribers and capturing the most beautiful natural soundscapes. These creators haven't broken through yet — but their videos are trending right now.</p>
+        <div class="channels-list" id="list-gems"><div class="state-box"><div class="msg">Fetching trending nature sounds videos...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <div id="panel-rising" class="tab-panel">
+        <p class="tier-intro">Under 10K subscribers — the newest nature sounds creators on YouTube. If a video from this tier is trending, this creator is one to watch.</p>
+        <div class="channels-list" id="list-rising"><div class="state-box"><div class="msg">Fetching trending nature sounds videos...</div><div class="sub">Pulling live data from YouTube</div></div></div>
+    </div>
+    <footer>CREATORINDEX · EST. 2026</footer>
+    <script src="search.js"></script>
+    <script>
+        function switchTab(tier, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + tier).classList.add('active');
+        }
+        function tierTag(tier) {
+            if (tier === 'Fan Favourites') return '⭐ Fan Favourite';
+            if (tier === 'Established')    return '📈 Established';
+            if (tier === 'Mid Tier')       return '🎯 Mid Tier';
+            if (tier === 'Hidden Gems')    return '💎 Hidden Gem';
+            if (tier === 'Rising Stars')   return '🚀 Rising Star';
+            return tier;
+        }
+        function renderVideoCard(video, rank) {
+            const m = video.momentum || { arrow: '→', label: 'Holding' };
+            return `
+                <a class="video-card" href="${video.videoUrl}" target="_blank">
+                    <div class="rank">${String(rank).padStart(2, '0')}</div>
+                    <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                    <div class="video-info">
+                        <div class="video-title">${video.title}</div>
+                        <div class="video-channel">${video.channelName}</div>
+                        <div class="tag-row">
+                            <span class="video-tag">${tierTag(video.tier.name)}</span>
+                            <span class="momentum"><span class="arrow">${m.arrow}</span>${m.label}</span>
+                        </div>
+                    </div>
+                    <div class="video-views">${video.viewsDisplay}<span>views · ${video.publishedAgo}</span></div>
+                    <span class="visit-btn">Visit →</span>
+                </a>`;
+        }
+        function renderList(listId, videos) {
+            const el = document.getElementById(listId);
+            if (!el) return;
+            if (!videos || videos.length === 0) {
+                el.innerHTML = `<div class="empty-list">No trending videos found in this tier right now — check back soon.</div>`;
+                return;
+            }
+            el.innerHTML = videos.slice(0, 20).map((v, i) => renderVideoCard(v, i + 1)).join('');
+        }
+        async function loadPage() {
+            try {
+                const videos = await window.CreatorIndex.searchCategoryVideos('nature', 7, 150);
+                if (!videos || videos.length === 0) {
+                    ['list-favourites','list-established','list-midtier','list-gems','list-rising'].forEach(id => {
+                        document.getElementById(id).innerHTML = `<div class="empty-list">Could not load videos. Check your API key in search.js and refresh.</div>`;
+                    });
+                    return;
+                }
+                renderList('list-favourites', videos.filter(v => v.subscribers >= 550000));
+                renderList('list-established', videos.filter(v => v.subscribers >= 200000 && v.subscribers < 550000));
+                renderList('list-midtier',     videos.filter(v => v.subscribers >= 50000  && v.subscribers < 200000));
+                renderList('list-gems',        videos.filter(v => v.subscribers >= 10000  && v.subscribers < 50000));
+                renderList('list-rising',      videos.filter(v => v.subscribers < 10000));
+                const now = new Date();
+                document.getElementById('lastUpdated').textContent =
+                    `Live data · updated ${now.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })} at ${now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}`;
+            } catch (err) {
+                console.error('Page load failed:', err);
+                ['list-favourites','list-established','list-midtier','list-gems','list-rising'].forEach(id => {
+                    document.getElementById(id).innerHTML = `<div class="empty-list">Something went wrong. Please refresh the page.</div>`;
+                });
+            }
+        }
+        loadPage();
+    </script>
+</body>
+</html>
