@@ -325,7 +325,8 @@ async function getFastestGrowingChannels() {
         channelUrl:  video.channelUrl,
         subscribers: video.subscribers,
         subsDisplay: video.subsDisplay,
-        tier:        video.tier,
+        tier:             video.tier,
+        channelThumbnail: video.channelThumbnail,
         recentViews: 0,
         videoCount:  0
       };
