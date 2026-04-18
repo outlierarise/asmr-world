@@ -155,20 +155,25 @@ const filtered = videoData.items.filter(video => {
 
     // Step 4: Get channel subscriber counts
     const channelIds = [...new Set(filtered.map(v => v.snippet.channelId))].join(',');
-    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelIds}&key=${API_KEY}`;
+    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${channelIds}&key=${API_KEY}`;
     const channelResponse = await fetch(channelUrl);
     const channelData = await channelResponse.json();
 
     const channelMap = {};
     if (channelData.items) {
       channelData.items.forEach(ch => {
-        channelMap[ch.id] = parseInt(ch.statistics.subscriberCount) || 0;
+        channelMap[ch.id] = {
+  subscribers: parseInt(ch.statistics.subscriberCount) || 0,
+  thumbnail: ch.snippet?.thumbnails?.default?.url || ''
+};
       });
     }
 
     // Step 5: Build video objects
     const videos = filtered.map(video => {
-      const subscribers = channelMap[video.snippet.channelId] || 0;
+      const channelInfo = channelMap[video.snippet.channelId] || {};
+const subscribers = channelInfo.subscribers || 0;
+const channelThumbnail = channelInfo.thumbnail || '';
       const views = parseInt(video.statistics.viewCount) || 0;
       const duration = parseDuration(video.contentDetails?.duration);
 
@@ -188,6 +193,7 @@ const filtered = videoData.items.filter(video => {
         tier:         getTier(subscribers),
         videoUrl:     `https://www.youtube.com/watch?v=${video.id}`,
         channelUrl:   `https://www.youtube.com/channel/${video.snippet.channelId}`
+        channelThumbnail: channelThumbnail,
       };
     });
 
