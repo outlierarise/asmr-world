@@ -110,9 +110,10 @@
             return `
                 <a class="artist-card" href="${channel.channelUrl}" target="_blank">
                     <div class="rank">${String(rank).padStart(2, '0')}</div>
-                    <div class="artist-avatar">
-                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
+                ${channel.channelThumbnail
+  ? `<img src="${channel.channelThumbnail}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="${channel.channelName}">`
+  : `<div class="artist-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>`
+}
                     <div class="artist-info">
                         <div class="artist-name">${channel.channelName}</div>
                         <div class="artist-meta">${channel.subsDisplay} subscribers</div>
