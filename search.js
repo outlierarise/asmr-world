@@ -4,7 +4,7 @@
 //  Place this file in your asmr-app/ folder
 // ============================================================
 
-const API_KEY = 'AIzaSyDRb3shAfqI5G5RLEXyVead9nLpTDrWdv8'; // 🔑 Paste your API key here
+const API_KEY = 'AIzaSyASnu5TeWTzkHZOWkDgamCfifyYHZJ5Yv8'; // 🔑 Paste your API key here
 
 // ============================================================
 //  CATEGORY SEARCH TERMS
