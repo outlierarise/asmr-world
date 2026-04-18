@@ -112,9 +112,10 @@
             return `
                 <a class="channel-card" href="${channel.channelUrl}" target="_blank">
                     <div class="rank">${String(rank).padStart(2, '0')}</div>
-                    <div class="channel-avatar">
-                        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                    </div>
+                    ${channel.channelThumbnail
+                      ? `<img src="${channel.channelThumbnail}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="${channel.channelName}">`
+                      : `<div class="channel-avatar"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>`
+                    }
                     <div class="channel-info">
                         <div class="channel-name">${channel.channelName}</div>
                         <div class="channel-meta">${channel.subsDisplay} subscribers · ${channel.videoCount} recent video${channel.videoCount !== 1 ? 's' : ''}</div>
