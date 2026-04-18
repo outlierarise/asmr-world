@@ -80,7 +80,7 @@
         async function loadPage() {
             const list = document.getElementById('video-list');
             try {
-                const videos = await window.CreatorIndex.getTopVideosAllTime(20);
+const videos = await window.CreatorIndex.getTopVideosAllTime(50);
                 if (!videos || videos.length === 0) {
                     list.innerHTML = `<div class="empty-list">Could not load videos. Check your API key in search.js and refresh.</div>`;
                     return;
