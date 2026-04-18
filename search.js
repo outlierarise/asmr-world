@@ -192,7 +192,7 @@ const channelThumbnail = channelInfo.thumbnail || '';
         duration:     duration,
         tier:         getTier(subscribers),
         videoUrl:     `https://www.youtube.com/watch?v=${video.id}`,
-        channelUrl:   `https://www.youtube.com/channel/${video.snippet.channelId}`
+        channelUrl:   `https://www.youtube.com/channel/${video.snippet.channelId}`,
         channelThumbnail: channelThumbnail,
       };
     });
@@ -365,7 +365,8 @@ async function getTopArtists() {
         channelUrl:  video.channelUrl,
         subscribers: video.subscribers,
         subsDisplay: video.subsDisplay,
-        tier:        video.tier
+        tier:             video.tier,
+        channelThumbnail: video.channelThumbnail
       };
     }
   });
