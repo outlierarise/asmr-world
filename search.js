@@ -349,28 +349,62 @@ async function getFastestGrowingChannels() {
 // ============================================================
 
 async function getTopArtists() {
-  const results = await Promise.all(
-    Object.keys(CATEGORIES)
-      .filter(cat => cat !== 'shorts')
-      .map(cat => searchCategoryVideos(cat, 30, 20))
-  );
+  const SEED_CHANNELS = [
+    'UCp4LfMtDfoa29kTlLnqQ5Mg', // SAS-ASMR
+    'UCE6acMV3m35znLcf0JGNn7Q', // Gibi ASMR
+    'UCgBg9-6b0ZB-_Kf7BBP2N9g', // Jojo's ASMR
+    'UCzGEGjOCbgv9z9SF71QyI7g', // ASMR Zeitgeist
+    'UCikebqFWoT3QC9axUbXCPYw', // ASMR Darling
+    'UC6gLlIAnzg7eJ8VuXDCZ_vg', // Gentle Whispering ASMR
+    'UCv5bDPaEjKGBFcMcFkoBMjg', // Latte ASMR
+    'UClqNSqnWeOOUVkzcJFj4rBw', // Tingting ASMR
+    'UCiMVtPANMiOJyNMJRCfXxjA', // ASMR Glow
+    'UClMJgjg2z_IrRm6J9KrhcuQ', // Goodnight Moon
+    'UC2nyigZS5YNDrCu_pih809w', // WhispersRed ASMR
+    'UCdvYSTbhmzWgWyfGnhet03Q', // Diddly ASMR
+    'UCzPW2uxfH6QOFYDaDJFWMAA', // ALB in Whisperland
+    'UCCOto-kMfW8FA-nRH54F9Dg', // Amy Kay ASMR
+    'UCoviXqo4b1MAAkjRWEPJrBg', // Busy B ASMR
+    'UClPZzcmsdi6kT6wQGHIZsYQ', // Maimy ASMR
+    'UCDwR_uew-XkbO0RjUAgrUug', // Sarah Lavender ASMR
+    'UC79B6k5KZxYLETtXFfZH1cg', // Slight Sounds ASMR
+    'UCqFbF_CD2CJ_jwiQCfCJqEQ', // Madi ASMR
+    'UC6D9fAeTFECqqq2GuMw3Bug', // Whispers of the Wolf
+    'UCPNjkO5wZEnhP47dKn2b3gA', // Mermaid Whispers
+    'UCW6ulUHXpmumuNZS8rWLXbA', // Freckles ASMR
+    'UCO8KOv8doJNlidLGf8xX1gg', // Behind the Moons
+    'UCzIAdDpmms6tl77N84f6u2w'  // Nymfy ASMR
+  ];
 
-  const allVideos = results.flat();
+  try {
+    const channelIds = SEED_CHANNELS.join(',');
+    const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelIds}&key=${API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-  const channelMap = {};
-  allVideos.forEach(video => {
-    if (!channelMap[video.channelId]) {
-      channelMap[video.channelId] = {
-        channelId:   video.channelId,
-        channelName: video.channelName,
-        channelUrl:  video.channelUrl,
-        subscribers: video.subscribers,
-        subsDisplay: video.subsDisplay,
-        tier:             video.tier,
-        channelThumbnail: video.channelThumbnail
+    if (!data.items) return groupByTier([]);
+
+    const channels = data.items.map(ch => {
+      const subscribers = parseInt(ch.statistics.subscriberCount) || 0;
+      return {
+        channelId:        ch.id,
+        channelName:      ch.snippet.title,
+        channelUrl:       `https://www.youtube.com/channel/${ch.id}`,
+        subscribers:      subscribers,
+        subsDisplay:      formatNumber(subscribers),
+        tier:             getTier(subscribers),
+        channelThumbnail: ch.snippet.thumbnails?.default?.url || ''
       };
-    }
-  });
+    });
+
+    channels.sort((a, b) => b.subscribers - a.subscribers);
+    return groupByTier(channels);
+
+  } catch (error) {
+    console.error('getTopArtists failed:', error);
+    return groupByTier([]);
+  }
+}
 
   const channels = Object.values(channelMap);
   channels.sort((a, b) => b.subscribers - a.subscribers);
