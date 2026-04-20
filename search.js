@@ -406,12 +406,7 @@ async function getTopArtists() {
   }
 }
 
-  const channels = Object.values(channelMap);
-  channels.sort((a, b) => b.subscribers - a.subscribers);
-
-  return groupByTier(channels);
-}
-
+  
 // ============================================================
 //  EXPORTS
 // ============================================================
